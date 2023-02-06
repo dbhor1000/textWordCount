@@ -59,7 +59,7 @@ public class Main {
 
             int numberOfWords = words.length;
 
-            System.out.println("Всего слов в тексте:" + numberOfWords);
+            System.out.println("Всего слов в тексте: " + numberOfWords);
 
 
 
@@ -135,22 +135,6 @@ public class Main {
 
         mapOfWords.entrySet().stream()
                 .sorted(Collections.reverseOrder(Map.Entry.comparingByValue())).limit(10).forEach(System.out::println);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     }
 }
