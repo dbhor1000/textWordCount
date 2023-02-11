@@ -2,6 +2,7 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) {
@@ -53,88 +54,30 @@ public class Main {
 
         //Отфильтровываем символы и цифры.
 
-            words = Arrays.stream(words).filter(s -> s.matches("^[аАбБвВгГдДеЕёЁжЖзЗиИйЙкКлЛмМнНоОпПрРсСтТуУфФхХцЦчЧшШщЩъЪыЫьЬэЭюЮяЯ]+$")).toArray(String[]::new);
+            words = Arrays.stream(words)
+                    .map(s -> s.toLowerCase().trim())       //добавлено 11.02 с целью подсчёт слов в разном регистре как одинаковых
+                    .filter(s -> s.matches("^[аАбБвВгГдДеЕёЁжЖзЗиИйЙкКлЛмМнНоОпПрРсСтТуУфФхХцЦчЧшШщЩъЪыЫьЬэЭюЮяЯ]+$"))
+                    .toArray(String[]::new);
+
 
         //Всего слов в отфильтрованном тексте.
 
-            int numberOfWords = words.length;
+        System.out.println("Всего слов в тексте: " + words.length);
 
-            System.out.println("Всего слов в тексте: " + numberOfWords);
+       //Добавление мап. Далее, преобразование массива в Мап через стрим.
 
-
-
-        //Добавление мап. Далее, преобразование массива в Мап через стрим.
+        Map<String, Long> mapOfWords = new HashMap<>();
 
 
-
-        Map<String, Long> mapOfWords = new Map<String, Long>() {
-            @Override
-            public int size() {
-                return 0;
-            }
-
-            @Override
-            public boolean isEmpty() {
-                return false;
-            }
-
-            @Override
-            public boolean containsKey(Object key) {
-                return false;
-            }
-
-            @Override
-            public boolean containsValue(Object value) {
-                return false;
-            }
-
-            @Override
-            public Long get(Object key) {
-                return null;
-            }
-
-            @Override
-            public Long put(String key, Long value) {
-                return null;
-            }
-
-            @Override
-            public Long remove(Object key) {
-                return null;
-            }
-
-            @Override
-            public void putAll(Map<? extends String, ? extends Long> m) {
-
-            }
-
-            @Override
-            public void clear() {
-
-            }
-
-            @Override
-            public Set<String> keySet() {
-                return null;
-            }
-
-            @Override
-            public Collection<Long> values() {
-                return null;
-            }
-
-            @Override
-            public Set<Entry<String, Long>> entrySet() {
-                return null;
-            }
-        };
-
-        mapOfWords = Arrays.stream(words).collect(Collectors.toMap(Function.identity(), v -> 1L, Long::sum));
+        mapOfWords = Arrays.stream(words)
+                .collect(Collectors.toMap(Function.identity(), v -> 1L, Long::sum));
 
         //Вывод 10 наиболее популярных слов из текста.
 
-        mapOfWords.entrySet().stream()
-                .sorted(Collections.reverseOrder(Map.Entry.comparingByValue())).limit(10).forEach(System.out::println);
+        mapOfWords.entrySet().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByValue())).limit(10).forEach(System.out::println);
+
+
+
 
     }
 }
