@@ -62,7 +62,7 @@ public class Main {
 
         //Всего слов в отфильтрованном тексте.
 
-        System.out.println("Всего слов в тексте: " + words.length);
+        System.out.println("Всего слов в тексте: " + Arrays.stream(words).count());
 
        //Добавление мап. Далее, преобразование массива в Мап через стрим.
 
